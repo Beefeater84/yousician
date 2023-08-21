@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --black-color: #000000;
+    --grey-color: #101010;
+    --grey2-color: #383635;
+    --grey3-color: #383635;
+    --grey4-color: #939393;
+    --white-color: #ffffff;
+    --green-color: #6fc13e;
+    --yelow-color: #ff8e00;
+    --red-color: #dc001c;
+}
+
+body {
+    color: var(--white-color);
+    font-size: 16px;
+    background-color: var(--black-color);
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 2.349rem;
+    line-height: 2.5rem;
+}

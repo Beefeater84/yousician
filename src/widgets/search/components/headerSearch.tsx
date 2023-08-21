@@ -13,9 +13,20 @@ export default function HeaderSearch() {
   return (
     <div className="relative flex w-[100%]">
       <input
+        aria-label="Search the songs"
         ref={ref}
         {...inputProps}
-        className="h-[47px] pl-8 pr-16 pr-100 w-full rounded-[25px] appearance-none"
+        className="
+              h-[47px]
+              pr-12
+              pl-4
+              tablet:pl-8
+              tablet:pr-16
+              pr-100
+              w-full
+              rounded-[25px]
+              appearance-none
+        "
         type="search"
         name="headerSearch"
         placeholder="Search for songs by artist or title"

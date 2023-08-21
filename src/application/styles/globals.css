@@ -27,8 +27,17 @@ body {
 h1 {
     position: relative;
     font-weight: 700;
-    font-size: 2.349rem;
-    line-height: 2.5rem;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    h1 {
+        position: relative;
+        font-weight: 700;
+        font-size: 2.349rem;
+        line-height: 2.5rem;
+    }
 }
 
 .subheading {
@@ -36,9 +45,9 @@ h1 {
     font-weight: 300;
 }
 
-input{
-    font-size: .8rem;
+input {
     line-height: 1.5rem;
+    font-size: .7rem;
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
     border: 1px solid var(--white-color);
@@ -48,18 +57,14 @@ input{
     transition: border-color 0.2s ease-in-out;
 }
 
+@media (min-width: 768px) {
+    input  {
+        font-size: .8rem;
+    }
+}
+
+
 input:focus::placeholder {
     color: transparent;
 }
 
-@media screen and (min-width: var(--mobile)) {
-
-}
-
-@media screen and (min-width: var(--tablet)) {
-
-}
-
-@media screen and (min-width: var(--desktop)) {
-
-}

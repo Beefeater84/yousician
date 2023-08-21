@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { BREAKPOINTS } from "./src/application/constants/constants";
 
 const config: Config = {
   content: [
@@ -11,10 +12,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      screens: {
+        mobile: `${BREAKPOINTS.mobile}px`,
+        tablet: `${BREAKPOINTS.tablet}px`,
+        desktop: `${BREAKPOINTS.desktop}px`,
       },
     },
   },

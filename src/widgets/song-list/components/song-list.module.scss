@@ -1,0 +1,23 @@
+.row {
+  display: grid;
+  grid-template-columns: 90px 1fr 50px 50px;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem;
+  min-height: 79px;
+}
+
+.titleWrap {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.title{
+  font-weight: 600;
+  padding-bottom: 5px;
+}
+
+.artist{
+  color: var(--grey4-color)
+}

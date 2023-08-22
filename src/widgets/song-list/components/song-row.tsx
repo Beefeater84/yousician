@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { SongType } from "@/entities/song/types/songs-types";
+import Level from "@/featured/level/components/level";
 import styles from "./song-list.module.scss";
 
 interface SongRowProps {
@@ -22,7 +23,9 @@ export default function SongRow({ song }: SongRowProps) {
         <span className={styles.title}>{title}</span>
         <span className={styles.artist}>{artist}</span>
       </div>
-      <div>{level}</div>
+      <div>
+        <Level difficulty={level} />
+      </div>
       <div>favorite</div>
     </div>
   );

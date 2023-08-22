@@ -1,0 +1,130 @@
+.difficulty {
+  display: flex;
+  aspect-ratio: 1;
+  width: 35px;
+  border-radius: 50%;
+  background-color: var(--black-color);
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  position: relative;
+}
+
+.level{
+  z-index: 3;
+  position: relative;
+}
+
+.palette {
+  --color: var(--grey2-color);
+  --easyColor: var(--green-color);
+  --mediumColor: var(--yelow-color);
+  --hardColor: var(--red-color);
+
+  z-index: 1;
+  height: 31px;
+  width: 31px;
+  position: absolute;
+  border-radius: 50%;
+  transform: rotate(5deg);
+  &:after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background-color: var(--black-color);
+  }
+}
+
+.easyColor {
+  --color: var(--green-color) !important;
+}
+
+.mediumColor {
+  --color: var(--yelow-color) !important;
+}
+
+.hardColor {
+  --color: var(--red-color) !important;
+}
+
+// ToDo - перенести это в style, и там динамически менять цвет, в зависимости от уровня сложности
+
+.paletteColor{
+  @extend .palette;
+  z-index: 2;
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 50%);
+}
+
+
+
+//.palette {
+//  --s: 2px;
+//  --g: 5px;
+//
+//  left: 2px;
+//  top: 2px;
+//  height: 31px;
+//  width: 31px;
+//  position: absolute;
+//  display: inline-block;
+//  overflow: hidden;
+//}
+//
+//.palette{
+//  z-index: 1;
+//  border-style: dashed;
+//}
+//
+//.palette > * {
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  border: var(--s) solid var(--c, var(--grey2-color));
+//  border-radius: 50%;
+//  clip-path: polygon(calc(50% + var(--g) / 2) 50%,
+//          calc(50% + var(--g) / 2) 0%,
+//          100% 0%,
+//          100% calc(78.665% - var(--g) / 2),
+//          50% calc(50% - var(--g) / 2));
+//}
+//
+//.color1 {
+//  transform: rotate(120deg);
+//  --c: var(--grey2-color);
+//}
+//
+//.color2 {
+//  transform: rotate(-120deg);
+//  --c: var(--grey2-color);
+//}
+//
+//.paletteColor{
+//  z-index: 2;
+//}
+//
+//.green {
+//  --c: var(--green-color);
+//}
+//
+//.yellow {
+//  --c: var(--yelow-color);
+//}
+//
+//.red {
+//  --c: var(--red-color);
+//}
+
+
+
+
+
+
+
+
+

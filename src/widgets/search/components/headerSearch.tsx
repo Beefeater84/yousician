@@ -13,7 +13,7 @@ export default function HeaderSearch() {
   return (
     <div className="relative flex w-[100%]">
       <input
-        aria-label="Search the songs"
+        aria-label="search"
         ref={ref}
         {...inputProps}
         className="
@@ -32,6 +32,7 @@ export default function HeaderSearch() {
         placeholder="Search for songs by artist or title"
       />
       <button
+        aria-label="type to search"
         type="button"
         className="absolute right-0 top-0 h-[100%] pr-6 flex items-center justify-center"
       >

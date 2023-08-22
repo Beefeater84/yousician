@@ -10,20 +10,14 @@ import Table from "@/shared/components/table/table";
 import SongRow from "@/widgets/song-list/components/song-row";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "@/shared/components/loader/loading";
+import NoMoreElements from "@/widgets/song-list/components/song-list-no-more-elements";
 
 export default function SongList() {
   const [songs, setSongs] = useState<SongType[]>([]);
 
-  const {
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    data,
-    status,
-    error,
-  } = useInfiniteQuery(
+  const { fetchNextPage, hasNextPage, data, status } = useInfiniteQuery(
     ["/songs"],
-    ({ pageParam = 1 }) =>
+    ({ pageParam = 0 }) =>
       getSongs("/songs", {
         _limit: SONGS_PER_PAGE,
         _start: pageParam * SONGS_PER_PAGE,
@@ -59,7 +53,7 @@ export default function SongList() {
           next={fetchNextPage}
           hasMore={!!hasNextPage}
           loader={<Loading />}
-          endMessage={<p>No more songs to load</p>}
+          endMessage={<NoMoreElements />}
         >
           <Table>
             {songs.map((song) => {

@@ -11,7 +11,12 @@ export default function SongRow({ song }: SongRowProps) {
   return (
     <div className={styles.row}>
       <div>
-        <Image src={images} alt={`Cover for ${title}`} width="63" height="63" />
+        <Image
+          src={images}
+          alt={`Cover for "${title}"`}
+          width="63"
+          height="63"
+        />
       </div>
       <div className={styles.titleWrap}>
         <span className={styles.title}>{title}</span>

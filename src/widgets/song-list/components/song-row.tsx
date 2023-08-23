@@ -1,13 +1,20 @@
 import Image from "next/image";
 import { SongType } from "@/entities/song/types/songs-types";
 import Level from "@/featured/level/components/level";
+import SongToFavorites from "@/featured/song-to-favorites/components/SongToFavorites";
 import styles from "./song-list.module.scss";
 
 interface SongRowProps {
   song: SongType;
+  isFavorite: boolean;
+  favoriteId: string;
 }
-export default function SongRow({ song }: SongRowProps) {
-  const { images, title, artist, level } = song;
+export default function SongRow({
+  song,
+  isFavorite,
+  favoriteId,
+}: SongRowProps) {
+  const { images, title, artist, level, id } = song;
 
   return (
     <div className={styles.row}>
@@ -26,7 +33,13 @@ export default function SongRow({ song }: SongRowProps) {
       <div>
         <Level difficulty={level} />
       </div>
-      <div>favorite</div>
+      <div>
+        <SongToFavorites
+          songId={id}
+          isFavorite={isFavorite}
+          favoriteId={favoriteId}
+        />
+      </div>
     </div>
   );
 }

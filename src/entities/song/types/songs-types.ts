@@ -16,8 +16,10 @@ export type SongLevelType =
   | 14
   | 15;
 
+export type SongId = string;
+
 export type SongType = {
-  id: string;
+  id: SongId;
   title: string;
   artist: string;
   images: string;
@@ -26,3 +28,8 @@ export type SongType = {
 };
 
 export type SongsType = SongType[];
+
+export type SongFavoriteType = {
+  songId: SongId;
+  id: string;
+};

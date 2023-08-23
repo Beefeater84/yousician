@@ -1,7 +1,11 @@
 "use client";
 
 import Container from "@/shared/components/container/Container";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import getSongs from "@/entities/song/api/get-songs";
 import { SONGS_PER_PAGE } from "@/application/constants/constants";
 import { useEffect, useState } from "react";
@@ -11,9 +15,21 @@ import SongRow from "@/widgets/song-list/components/song-row";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "@/shared/components/loader/loading";
 import NoMoreElements from "@/widgets/song-list/components/song-list-no-more-elements";
+import { getFavorites } from "@/entities/song/api/favorites";
 
 export default function SongList() {
   const [songs, setSongs] = useState<SongType[]>([]);
+  const [favorites, setFavorites] = useState(new Map());
+
+  const queryClient = useQueryClient();
+  const { data: searchTermData } = useQuery({
+    queryKey: ["/searchTerm"],
+    queryFn: async () => {
+      return queryClient.getQueryData(["/searchTerm"]) || "";
+    },
+  });
+
+  const searchTerm = searchTermData || "";
 
   const { fetchNextPage, hasNextPage, data, status } = useInfiniteQuery(
     ["/songs"],
@@ -21,6 +37,7 @@ export default function SongList() {
       getSongs("/songs", {
         _limit: SONGS_PER_PAGE,
         _start: pageParam * SONGS_PER_PAGE,
+        search_like: searchTerm,
       }),
     {
       getNextPageParam: (lastPage, allPages) => {
@@ -28,6 +45,20 @@ export default function SongList() {
       },
     },
   );
+
+  const { data: favoritesData } = useQuery({
+    queryKey: ["/favorites"],
+    queryFn: getFavorites,
+  });
+
+  useEffect(() => {
+    if (!favoritesData) return;
+    const favoritesMap = new Map();
+    favoritesData.forEach((favorite) => {
+      favoritesMap.set(favorite.songId, favorite.id);
+      setFavorites(favoritesMap);
+    });
+  }, [favoritesData]);
 
   useEffect(() => {
     if (!data) return;
@@ -57,7 +88,17 @@ export default function SongList() {
         >
           <Table>
             {songs.map((song) => {
-              return <SongRow key={song.id} song={song} />;
+              const isFavorite = favorites.has(song.id);
+              const favoriteId = favorites.get(song.id);
+
+              return (
+                <SongRow
+                  key={song.id}
+                  song={song}
+                  isFavorite={isFavorite}
+                  favoriteId={favoriteId}
+                />
+              );
             })}
           </Table>
         </InfiniteScroll>

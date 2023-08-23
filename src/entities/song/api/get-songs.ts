@@ -1,9 +1,4 @@
-import axios from "axios";
-import { SERVER_BASE_URL } from "@/application/constants/constants";
-
-const instance = axios.create({
-  baseURL: SERVER_BASE_URL,
-});
+import { instance } from "@/entities/song/api/base-axios";
 
 const getSongs = async (url: string, parameters?: object) => {
   const response = await instance.get(url, {

@@ -1,0 +1,15 @@
+.favorite {
+
+  svg {
+    cursor: pointer;
+    color: var(--grey4-color);
+
+    &.active{
+        color: var(--red-color);
+    }
+
+    &:hover {
+      color: var(--red-color);
+    }
+  }
+}

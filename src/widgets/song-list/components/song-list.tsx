@@ -74,28 +74,30 @@ export default function SongList() {
   }
 
   return (
-    <InfiniteScroll
-      dataLength={songs.length}
-      next={fetchNextPage}
-      hasMore={!!hasNextPage}
-      loader={<Loading />}
-      endMessage={<NoMoreElements />}
-    >
-      <Table>
-        {songs.map((song) => {
-          const isFavorite = favorites.has(song.id);
-          const favoriteId = favorites.get(song.id);
+    <section className="mx-[-1rem] tablet:mx-0">
+      <InfiniteScroll
+        dataLength={songs.length}
+        next={fetchNextPage}
+        hasMore={!!hasNextPage}
+        loader={<Loading />}
+        endMessage={<NoMoreElements />}
+      >
+        <Table>
+          {songs.map((song) => {
+            const isFavorite = favorites.has(song.id);
+            const favoriteId = favorites.get(song.id);
 
-          return (
-            <SongRow
-              key={song.id}
-              song={song}
-              isFavorite={isFavorite}
-              favoriteId={favoriteId}
-            />
-          );
-        })}
-      </Table>
-    </InfiniteScroll>
+            return (
+              <SongRow
+                key={song.id}
+                song={song}
+                isFavorite={isFavorite}
+                favoriteId={favoriteId}
+              />
+            );
+          })}
+        </Table>
+      </InfiniteScroll>
+    </section>
   );
 }

@@ -9,7 +9,7 @@ import useDebounce from "@/shared/hooks/useDebounce";
 import { useAppDispatch } from "@/application/hooks/redux-hook";
 import { setSongFilter } from "@/featured/song-list-filters/store/filterSlice";
 
-type FilterType = {
+export type FilterType = {
   start: number | undefined;
   end: number | undefined;
 };
@@ -77,8 +77,8 @@ export default function SongListFilters() {
   }, [debouncedFilter, dispatch]);
 
   return (
-    <section>
-      <div className="flex justify-end w-full">
+    <section className="px-4">
+      <div className="flex justify-end w-full ">
         <FilterButton
           onClickHandler={onClickHandler}
           isFilterShown={showFilters}
@@ -91,19 +91,16 @@ export default function SongListFilters() {
           showFilters ? styles.open : ""
         }`}
       >
-        <div className="flex gap-2 justify-center items-center">
+        <div className="flex gap-[1.1rem] justify-end items-center pb-[2rem] pt-[0.5rem] flex-wrap">
           {levels.map((level) => {
-            let levelButtonState = null;
+            let levelButtonState: "selected" | undefined;
             if (
-              filter.start !== undefined &&
-              filter.end !== undefined &&
-              level >= filter.start &&
-              level <= filter.end
+              (filter.start !== undefined &&
+                filter.end !== undefined &&
+                level >= filter.start &&
+                level <= filter.end) ||
+              level === filter.start
             ) {
-              levelButtonState = "selected";
-            }
-
-            if (level === filter.start) {
               levelButtonState = "selected";
             }
 

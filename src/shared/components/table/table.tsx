@@ -1,5 +1,12 @@
 import styles from "./table.module.scss";
 
-export default function Table({ children }: { children: React.ReactNode }) {
-  return <div className={styles.table}>{children}</div>;
+interface TableProps {
+  children: React.ReactNode;
+  classes?: string;
+}
+
+export default function Table({ children, classes = "" }: TableProps) {
+  const tableClasses = `${styles.table} ${classes}`;
+
+  return <div className={tableClasses}>{children}</div>;
 }

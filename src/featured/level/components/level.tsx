@@ -3,10 +3,10 @@ import styles from "./level.module.scss";
 
 interface LevelProps {
   difficulty: SongLevelType;
-  state?: "selected" | null;
+  state?: "selected" | undefined;
 }
 
-export default function Level({ difficulty, state = null }: LevelProps) {
+export default function Level({ difficulty, state = undefined }: LevelProps) {
   let difficultyLevel = "Easy";
   const DIFFICULTY_POINT = 6;
   const FIRST_LINE_END = 30;

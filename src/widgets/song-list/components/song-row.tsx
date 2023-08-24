@@ -17,7 +17,13 @@ export default function SongRow({
   const { images, title, artist, level, id } = song;
 
   return (
-    <div className={styles.row}>
+    <div
+      className={`
+        px-[1rem]
+        table:px-0
+        ${styles.row}
+    `}
+    >
       <div>
         <Image
           src={images}

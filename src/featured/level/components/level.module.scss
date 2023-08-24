@@ -10,6 +10,20 @@
   position: relative;
 }
 
+.difficulty.selected{
+  background: var(--white-color) !important;
+  color: var(--black-color) !important;
+
+
+  & > div {
+    background: var(--white-color) !important;
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
 .level{
   z-index: 3;
   position: relative;

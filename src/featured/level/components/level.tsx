@@ -3,9 +3,10 @@ import styles from "./level.module.scss";
 
 interface LevelProps {
   difficulty: SongLevelType;
+  state?: "selected" | null;
 }
 
-export default function Level({ difficulty }: LevelProps) {
+export default function Level({ difficulty, state = null }: LevelProps) {
   let difficultyLevel = "Easy";
   const DIFFICULTY_POINT = 6;
   const FIRST_LINE_END = 30;
@@ -58,8 +59,10 @@ export default function Level({ difficulty }: LevelProps) {
     var(--black-color) 0
   )`;
 
+  const classes = state === "selected" ? styles.selected : "";
+
   return (
-    <div className={styles.difficulty}>
+    <div className={[styles.difficulty, classes].join(" ")}>
       <div className={styles.palette} style={{ background: conicGradient }} />
       <div className={styles.level}>{difficulty}</div>
     </div>

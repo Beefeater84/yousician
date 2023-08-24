@@ -93,23 +93,27 @@ export default function SongListFilters() {
       >
         <div className="flex gap-2 justify-center items-center">
           {levels.map((level) => {
-            const classes = [];
-            if (level >= filter.start && level <= filter.end) {
-              classes.push("bg-green-500");
+            let levelButtonState = null;
+            if (
+              filter.start !== undefined &&
+              filter.end !== undefined &&
+              level >= filter.start &&
+              level <= filter.end
+            ) {
+              levelButtonState = "selected";
             }
 
             if (level === filter.start) {
-              classes.push("bg-green-500");
+              levelButtonState = "selected";
             }
 
             return (
               <button
                 type="button"
-                className={classes.join(" ")}
                 onClick={() => onFilterHandler(level)}
                 key={level}
               >
-                <Level difficulty={level} />
+                <Level difficulty={level} state={levelButtonState} />
               </button>
             );
           })}

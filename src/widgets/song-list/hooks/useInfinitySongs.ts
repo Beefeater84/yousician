@@ -5,16 +5,14 @@ import { useAppSelector } from "@/application/hooks/redux-hook";
 import { SongFilter } from "@/widgets/song-list-filters/store/filterSlice";
 import { SongSearch } from "@/widgets/search/store/searchSlice";
 import createFilterParams from "@/widgets/song-list/helpers/create-filter-params";
-import { useMemo } from "react";
 
 export default function useInfinitySongs() {
   const { start, end } = useAppSelector(SongFilter);
   const { searchTerm } = useAppSelector(SongSearch);
   const filterParams = createFilterParams(start, end);
 
-  // return useMemo(() => query, [query]);
   return useInfiniteQuery(
-    ["/songs", searchTerm, filterParams],
+    ["/songs", searchTerm, filterParams], // query key
     ({ pageParam = 0 }) =>
       getSongs("/songs", {
         _limit: SONGS_PER_PAGE,

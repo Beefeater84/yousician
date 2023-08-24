@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import SongList from "@/widgets/song-list/components/song-list";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import store from "@/application/store/store";
 import Header from "@/widgets/header/components/header";
 import Container from "@/shared/components/container/Container";

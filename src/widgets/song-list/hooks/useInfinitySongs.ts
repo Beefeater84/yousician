@@ -12,7 +12,8 @@ export default function useInfinitySongs() {
   const { searchTerm } = useAppSelector(SongSearch);
   const filterParams = createFilterParams(start, end);
 
-  const query = useInfiniteQuery(
+  // return useMemo(() => query, [query]);
+  return useInfiniteQuery(
     ["/songs", searchTerm, filterParams],
     ({ pageParam = 0 }) =>
       getSongs("/songs", {
@@ -27,6 +28,4 @@ export default function useInfinitySongs() {
       },
     },
   );
-
-  return useMemo(() => query, [query]);
 }

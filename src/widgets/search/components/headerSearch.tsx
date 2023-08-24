@@ -6,36 +6,35 @@ import { useSearchField } from "react-aria";
 import SearchIcon from "@/widgets/search/components/searchIcon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function HeaderSearch() {
+export default function HeaderSearch({ startSearch }) {
   const state = useSearchFieldState({ defaultValue: "" });
   const ref = useRef(null);
   const { inputProps } = useSearchField({}, state, ref);
 
-  const queryClient = useQueryClient();
-  const searchMutation = useMutation({
-    mutationFn: async (newSearchTerm: string) => {
-      return newSearchTerm;
-    },
-
-    onSuccess: async (newSearchTerm) => {
-      await queryClient.invalidateQueries({
-        queryKey: ["/songs"],
-      });
-    },
-  });
+  // const searchMutation = useMutation({
+  //   mutationFn: async (newSearchTerm: string) => {
+  //     return newSearchTerm;
+  //   },
+  //
+  //   onSuccess: async (newSearchTerm) => {
+  //     await queryClient.invalidateQueries({
+  //       queryKey: ["/songs"],
+  //     });
+  //   },
+  // });
 
   const handleSearchChange = (event) => {
     const newSearchTerm = event.target.value;
-    queryClient.invalidateQueries(["/searchTerm"]);
-    queryClient.setQueryData(["/searchTerm"], {
-      searchTerm: newSearchTerm,
-    });
+    // queryClient.invalidateQueries(["/searchTerm"]);
+    // queryClient.setQueryData(["/searchTerm"], {
+    //   searchTerm: newSearchTerm,
+    // });
     state.setValue(newSearchTerm);
-    console.log("Updated searchTerm in cache", newSearchTerm);
   };
 
   const onClickHandler = () => {
-    searchMutation.mutateAsync(state.value);
+    // searchMutation.mutateAsync(state.value);
+    startSearch(state.value);
   };
 
   return (

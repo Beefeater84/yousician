@@ -2,7 +2,7 @@ import Background from "@/widgets/header/components/background";
 import Container from "@/shared/components/container/Container";
 import HeaderSearch from "@/widgets/search/components/headerSearch";
 
-export default function Header() {
+export default function Header({ startSearch }) {
   return (
     <header className="relative min-h-[261px] tablet:min-h-[300px] max-h-[none]">
       <Background />
@@ -28,7 +28,7 @@ export default function Header() {
           </span>
         </div>
         <div className="h-[100%] max-w-[636px] w-[100%] mx-auto">
-          <HeaderSearch />
+          <HeaderSearch startSearch={startSearch} />
         </div>
       </Container>
     </header>

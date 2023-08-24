@@ -14,25 +14,12 @@ import { getFavorites } from "@/entities/song/api/favorites";
 import { useAppSelector } from "@/application/hooks/redux-hook";
 import { SongFilter } from "@/featured/song-list-filters/store/filterSlice";
 import { SongSearch } from "@/widgets/search/store/searchSlice";
+import createFilterParams from "@/widgets/song-list/helpers/create-filter-params";
 
 export default function SongList() {
-  const [songs, setSongs] = useState<SongType[]>([]);
-  const [favorites, setFavorites] = useState(new Map());
   const { start, end } = useAppSelector(SongFilter);
   const { searchTerm } = useAppSelector(SongSearch);
-
-  const filterParams = {};
-
-  if (start !== undefined && end !== undefined) {
-    const range = Array.from({ length: end - start + 1 }, (_, i) => start + i);
-    filterParams.level = range;
-  } else if (start !== undefined) {
-    filterParams.level = [start];
-  }
-
-  if (start === undefined && end === undefined) {
-    filterParams.level = null;
-  }
+  const filterParams = createFilterParams(start, end);
 
   const { fetchNextPage, hasNextPage, data, status } = useInfiniteQuery(
     ["/songs", searchTerm, filterParams],
@@ -54,6 +41,9 @@ export default function SongList() {
     queryKey: ["/favorites"],
     queryFn: getFavorites,
   });
+
+  const [songs, setSongs] = useState<SongType[]>([]);
+  const [favorites, setFavorites] = useState(new Map());
 
   useEffect(() => {
     if (!favoritesData) return;
@@ -78,7 +68,7 @@ export default function SongList() {
       <InfiniteScroll
         dataLength={songs.length}
         next={fetchNextPage}
-        hasMore={!!hasNextPage}
+        hasMore={!!hasNextPage && songs.length >= SONGS_PER_PAGE}
         loader={<Loading />}
         endMessage={<NoMoreElements />}
       >

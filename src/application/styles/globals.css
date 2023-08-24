@@ -56,9 +56,15 @@ input {
     border-radius: 0.25rem;
     border: 1px solid var(--white-color);
     background-color: var(--white-color);
-    color: var(--grey4-color);
+    color: var(--black-color);
     outline: none;
     transition: border-color 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+input::placeholder {
+    font-weight: 400;
+    color: var(--grey4-color);
 }
 
 @media (min-width: 768px) {

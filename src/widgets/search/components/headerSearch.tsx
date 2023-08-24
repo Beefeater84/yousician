@@ -1,40 +1,35 @@
 "use client";
 
 import { useSearchFieldState } from "@react-stately/searchfield";
-import { useRef } from "react";
+import { ChangeEvent, KeyboardEvent, useRef } from "react";
 import { useSearchField } from "react-aria";
 import SearchIcon from "@/widgets/search/components/searchIcon";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAppDispatch } from "@/application/hooks/redux-hook";
+import { setSearchTerm } from "@/widgets/search/store/searchSlice";
 
-export default function HeaderSearch({ startSearch }) {
+export default function HeaderSearch() {
   const state = useSearchFieldState({ defaultValue: "" });
   const ref = useRef(null);
   const { inputProps } = useSearchField({}, state, ref);
+  const dispatch = useAppDispatch();
 
-  // const searchMutation = useMutation({
-  //   mutationFn: async (newSearchTerm: string) => {
-  //     return newSearchTerm;
-  //   },
-  //
-  //   onSuccess: async (newSearchTerm) => {
-  //     await queryClient.invalidateQueries({
-  //       queryKey: ["/songs"],
-  //     });
-  //   },
-  // });
-
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
-    // queryClient.invalidateQueries(["/searchTerm"]);
-    // queryClient.setQueryData(["/searchTerm"], {
-    //   searchTerm: newSearchTerm,
-    // });
     state.setValue(newSearchTerm);
   };
 
+  function dispatchSearchTerm() {
+    dispatch(setSearchTerm(state.value));
+  }
+
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      dispatchSearchTerm();
+    }
+  };
+
   const onClickHandler = () => {
-    // searchMutation.mutateAsync(state.value);
-    startSearch(state.value);
+    dispatchSearchTerm();
   };
 
   return (
@@ -58,6 +53,7 @@ export default function HeaderSearch({ startSearch }) {
         name="headerSearch"
         placeholder="Search for songs by artist or title"
         onChange={handleSearchChange}
+        onKeyDown={handleKeyPress}
         value={state.value}
       />
       <button

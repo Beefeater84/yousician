@@ -6,6 +6,8 @@ import { SongLevelType } from "@/entities/song/types/songs-types";
 import Level from "@/featured/level/components/level";
 import FilterButton from "@/featured/song-list-filters/components/filter-button";
 import useDebounce from "@/shared/hooks/useDebounce";
+import { useAppDispatch } from "@/application/hooks/redux-hook";
+import { setSongFilter } from "@/featured/song-list-filters/store/filterSlice";
 
 type FilterType = {
   start: number | undefined;
@@ -13,12 +15,13 @@ type FilterType = {
 };
 
 export default function SongListFilters() {
+  const dispatch = useAppDispatch();
   const [showFilters, setShowFilters] = useState(false);
   const [filter, setFilter] = useState<FilterType>({
     start: undefined,
     end: undefined,
   });
-  const UPDATE_SEARCH_DELAY = 2000;
+  const UPDATE_SEARCH_DELAY = 1000;
   const debouncedFilter = useDebounce(filter, UPDATE_SEARCH_DELAY);
 
   const levels: SongLevelType[] = [
@@ -69,21 +72,9 @@ export default function SongListFilters() {
     }
   };
 
-  const Go = () => {
-    // Здесь можете выполнить необходимые действия по обработке фильтров
-    console.log("Go function called");
-  };
-
   useEffect(() => {
-    // Если есть только start, задержка на запуск функции Go
-    if (debouncedFilter.start && !debouncedFilter.end) {
-      Go();
-    }
-    // Если есть и start, и end, сразу запускаем функцию Go
-    else if (debouncedFilter.start && debouncedFilter.end) {
-      Go();
-    }
-  }, [debouncedFilter]);
+    dispatch(setSongFilter(debouncedFilter));
+  }, [debouncedFilter, dispatch]);
 
   return (
     <section>

@@ -1,11 +1,6 @@
 "use client";
 
-import Container from "@/shared/components/container/Container";
-import {
-  useInfiniteQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import getSongs from "@/entities/song/api/get-songs";
 import { SONGS_PER_PAGE } from "@/application/constants/constants";
 import { useEffect, useState } from "react";
@@ -16,19 +11,37 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "@/shared/components/loader/loading";
 import NoMoreElements from "@/widgets/song-list/components/song-list-no-more-elements";
 import { getFavorites } from "@/entities/song/api/favorites";
-import SongListFilters from "@/featured/song-list-filters/components/song-list-filters";
+import { useAppSelector } from "@/application/hooks/redux-hook";
+import { SongFilter } from "@/featured/song-list-filters/store/filterSlice";
+import { SongSearch } from "@/widgets/search/store/searchSlice";
 
-export default function SongList({ searchTerm = "" }) {
+export default function SongList() {
   const [songs, setSongs] = useState<SongType[]>([]);
   const [favorites, setFavorites] = useState(new Map());
+  const { start, end } = useAppSelector(SongFilter);
+  const { searchTerm } = useAppSelector(SongSearch);
+
+  const filterParams = {};
+
+  if (start !== undefined && end !== undefined) {
+    const range = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+    filterParams.level = range;
+  } else if (start !== undefined) {
+    filterParams.level = [start];
+  }
+
+  if (start === undefined && end === undefined) {
+    filterParams.level = null;
+  }
 
   const { fetchNextPage, hasNextPage, data, status } = useInfiniteQuery(
-    ["/songs", searchTerm],
+    ["/songs", searchTerm, filterParams],
     ({ pageParam = 0 }) =>
       getSongs("/songs", {
         _limit: SONGS_PER_PAGE,
         _start: pageParam * SONGS_PER_PAGE,
         search_like: searchTerm,
+        ...filterParams,
       }),
     {
       getNextPageParam: (lastPage, allPages) => {

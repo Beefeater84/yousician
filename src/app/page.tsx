@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import Container from "@/shared/components/container/Container";
 import SongListFilters from "@/featured/song-list-filters/components/song-list-filters";
+import { Provider } from "react-redux";
+import store from "@/application/store/store";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,17 +19,17 @@ const queryClient = new QueryClient({
 });
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <Header startSearch={setSearchTerm} />
-      <main>
-        <Container>
-          <SongListFilters />
-          <SongList searchTerm={searchTerm} />
-        </Container>
-      </main>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Header />
+        <main>
+          <Container>
+            <SongListFilters />
+            <SongList />
+          </Container>
+        </main>
+      </QueryClientProvider>
+    </Provider>
   );
 }

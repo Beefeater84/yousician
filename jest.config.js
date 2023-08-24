@@ -12,14 +12,20 @@ const customJestConfig = {
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
   },
+  testEnvironmentOptions: {
+    url: "http://localhost:3004",
+  },
+
   moduleNameMapper: {
     "^@widgets(.*)$": "<rootDir>/src/widgets$1",
     "^@shared(.*)$": "<rootDir>/src/shared$1",
     "^@entities(.*)$": "<rootDir>/src/entities$1",
+    "^@application(.*)$": "<rootDir>/src/application$1",
+    "^@featured(.*)$": "<rootDir>/src/featured$1",
     "^@app(.*)$": "<rootDir>/src/app$1",
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
+  setupFilesAfterEnv: ["@testing-library/jest-dom", "<rootDir>/jest.setup.ts"],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

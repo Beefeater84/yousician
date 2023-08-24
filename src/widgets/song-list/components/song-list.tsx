@@ -1,7 +1,6 @@
 "use client";
 
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import getSongs from "@/entities/song/api/get-songs";
+import { useQuery } from "@tanstack/react-query";
 import { SONGS_PER_PAGE } from "@/application/constants/constants";
 import { useEffect, useState } from "react";
 import { SongType } from "@/entities/song/types/songs-types";
@@ -11,38 +10,16 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "@/shared/components/loader/loading";
 import NoMoreElements from "@/widgets/song-list/components/song-list-no-more-elements";
 import { getFavorites } from "@/entities/song/api/favorites";
-import { useAppSelector } from "@/application/hooks/redux-hook";
-import { SongFilter } from "@/featured/song-list-filters/store/filterSlice";
-import { SongSearch } from "@/widgets/search/store/searchSlice";
-import createFilterParams from "@/widgets/song-list/helpers/create-filter-params";
+import useInfinitySongs from "@/widgets/song-list/hooks/useInfinitySongs";
 
 export default function SongList() {
-  const { start, end } = useAppSelector(SongFilter);
-  const { searchTerm } = useAppSelector(SongSearch);
-  const filterParams = createFilterParams(start, end);
-
-  const { fetchNextPage, hasNextPage, data, status } = useInfiniteQuery(
-    ["/songs", searchTerm, filterParams],
-    ({ pageParam = 0 }) =>
-      getSongs("/songs", {
-        _limit: SONGS_PER_PAGE,
-        _start: pageParam * SONGS_PER_PAGE,
-        search_like: searchTerm,
-        ...filterParams,
-      }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        return lastPage?.length ? allPages.length + 1 : undefined;
-      },
-    },
-  );
+  const { fetchNextPage, hasNextPage, data, status } = useInfinitySongs();
 
   const { data: favoritesData } = useQuery({
     queryKey: ["/favorites"],
     queryFn: getFavorites,
   });
 
-  const [songs, setSongs] = useState<SongType[]>([]);
   const [favorites, setFavorites] = useState(new Map());
 
   useEffect(() => {
@@ -54,14 +31,16 @@ export default function SongList() {
     });
   }, [favoritesData]);
 
-  useEffect(() => {
-    if (!data) return;
-    setSongs(data.pages.flat());
-  }, [data]);
-
   if (status === "loading") {
     return <Loading />;
   }
+
+  if (status === "error") {
+    // TODO: add error component
+    return <div>ERROR</div>;
+  }
+
+  const songs: SongType[] = data?.pages?.flat() || [];
 
   return (
     <section className="mx-[-1rem] tablet:mx-0">

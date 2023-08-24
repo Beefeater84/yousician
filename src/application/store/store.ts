@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 // eslint-disable-next-line import/no-cycle
-import { SongFilterSlice } from "@/featured/song-list-filters/store/filterSlice";
+import { SongFilterSlice } from "@/widgets/song-list-filters/store/filterSlice";
 // eslint-disable-next-line import/no-cycle
 import { SongSearchSlice } from "@/widgets/search/store/searchSlice";
 

@@ -1,16 +1,13 @@
 "use client";
 
 import { useSearchFieldState } from "@react-stately/searchfield";
-import { ChangeEvent, KeyboardEvent, useRef } from "react";
-import { useSearchField } from "react-aria";
+import { ChangeEvent, KeyboardEvent } from "react";
 import SearchIcon from "@/widgets/search/components/searchIcon";
 import { useAppDispatch } from "@/application/hooks/redux-hook";
 import { setSearchTerm } from "@/widgets/search/store/searchSlice";
 
 export default function HeaderSearch() {
   const state = useSearchFieldState({ defaultValue: "" });
-  const ref = useRef(null);
-  const { inputProps } = useSearchField({}, state, ref);
   const dispatch = useAppDispatch();
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,9 +32,7 @@ export default function HeaderSearch() {
   return (
     <div className="relative flex w-[100%]">
       <input
-        aria-label="search"
-        ref={ref}
-        {...inputProps}
+        aria-label="Search for songs by artist or title"
         className="
               h-[47px]
               pr-12

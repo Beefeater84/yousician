@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "@/featured/song-list-filters/components/song-list-filters.module.scss";
+import styles from "@/widgets/song-list-filters/components/song-list-filters.module.scss";
 import { SongLevelType } from "@/entities/song/types/songs-types";
 import Level from "@/featured/level/components/level";
-import FilterButton from "@/featured/song-list-filters/components/filter-button";
+import FilterButton from "@/widgets/song-list-filters/components/filter-button";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { useAppDispatch } from "@/application/hooks/redux-hook";
-import { setSongFilter } from "@/featured/song-list-filters/store/filterSlice";
+import { setSongFilter } from "@/widgets/song-list-filters/store/filterSlice";
 
 export type FilterType = {
   start: number | undefined;

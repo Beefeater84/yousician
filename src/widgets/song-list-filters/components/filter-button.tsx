@@ -1,7 +1,7 @@
-import FilterIcon from "@/featured/song-list-filters/icons/filterIcon";
+import FilterIcon from "@/widgets/song-list-filters/icons/filterIcon";
 // Take it from parent Component
 // eslint-disable-next-line import/no-cycle
-import { FilterType } from "@/featured/song-list-filters/components/song-list-filters";
+import { FilterType } from "@/widgets/song-list-filters/components/song-list-filters";
 
 interface FilterButtonProps {
   onClickHandler: () => void;
